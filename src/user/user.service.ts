@@ -38,6 +38,10 @@ export class UserService {
     return response;
   }
 
+  getUserById(id: number): IUser | null {
+    return this.userRepository.findById(id);
+  }
+
   getUser(id: number): GetUserResponse {
     const user: IUser | null = this.userRepository.findById(id);
     if (!user)
