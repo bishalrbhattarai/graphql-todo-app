@@ -1,10 +1,10 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CreateTodoDto } from './dtos/create-todo.dto';
 import { TodoService } from './todo.service';
-import { CreateUserResponse } from 'src/user/dtos/create-user.response';
 import { CreateTodoResponse } from './dtos/create-todo.response';
+import { TodoType } from './todo.entity';
 
-@Resolver()
+@Resolver(()=>TodoType)
 export class TodoResolver {
   constructor(private readonly todoService: TodoService) {}
 
@@ -12,4 +12,7 @@ export class TodoResolver {
   createTodo(@Args('input') input: CreateTodoDto){
     return this.todoService.createTodo(input);
   }
+
+  @Resolver(() => UserType,{name:"user"})
+
 }
