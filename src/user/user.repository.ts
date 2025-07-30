@@ -6,8 +6,19 @@ export class UserRepository {
   private users: Array<IUser> = [];
   private length: number = 0;
 
-  findAll(): Array<IUser> {
+  findAll(): IUser[] {
     return this.users;
+  }
+
+  deleteById(id: number): IUser | null {
+    const index = this.users.findIndex((user) => user.id === id);
+    if (index !== -1) {
+      const deletedUser = this.users[index];
+      this.users.splice(index, 1);
+      --this.length;
+      return deletedUser;
+    }
+    return null;
   }
 
   findById(id: number): IUser | null {

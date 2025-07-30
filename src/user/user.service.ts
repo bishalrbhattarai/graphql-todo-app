@@ -9,10 +9,23 @@ import { UserSuccessMessageResponse } from './messages/sucess-message.response';
 import { GetUsersResponse } from './dtos/get-users.response';
 import { GetUserResponse } from './dtos/get-user.response';
 import { UserErrorMessageResponse } from './messages/error-message.response';
+import { DeleteUserResponse } from './dtos/delete-user.response';
 
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
+
+  deleteUser(id: number): DeleteUserResponse {
+    const deletedUser = this.userRepository.deleteById(id);
+    if (!deletedUser)
+      throw new NotFoundException(UserErrorMessageResponse.UserNotFound);
+    const userType: UserType = mapToUserType(deletedUser);
+    const response: DeleteUserResponse = {
+      message: UserSuccessMessageResponse.UserDeleted,
+      user: userType,
+    };
+    return response;
+  }
 
   getUsers(): GetUsersResponse {
     const users: IUser[] = this.userRepository.findAll();

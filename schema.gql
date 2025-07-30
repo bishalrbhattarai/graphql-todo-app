@@ -20,6 +20,12 @@ type GetUsersResponse {
 
 type GetUserResponse {
   message: String!
+  user: UserType!
+}
+
+type DeleteUserResponse {
+  message: String!
+  user: UserType!
 }
 
 type Query {
@@ -30,13 +36,9 @@ type Query {
 
 type Mutation {
   createUser(input: CreateUserDto!): CreateUserResponse!
-  deleteUser(id: Int!): GenericResponse!
+  deleteUser(id: Int!): DeleteUserResponse!
 }
 
 input CreateUserDto {
   username: String!
-}
-
-type GenericResponse {
-  message: String!
 }

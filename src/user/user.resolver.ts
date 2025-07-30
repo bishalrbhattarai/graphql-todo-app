@@ -6,6 +6,7 @@ import { CreateUserDto } from './dtos/creat-user.dto';
 import { GetUsersResponse } from './dtos/get-users.response';
 import { GetUserResponse } from './dtos/get-user.response';
 import { GenericResponse } from 'src/common/dtos/generic-response.dto';
+import { DeleteUserResponse } from './dtos/delete-user.response';
 
 @Resolver(() => UserType)
 export class UserResolver {
@@ -26,6 +27,8 @@ export class UserResolver {
     return this.userService.getUser(id);
   }
 
-  @Mutation(() => GenericResponse)
-  deleteUser(@Args('id', { type: () => Int }) id: number) {}
+  @Mutation(() => DeleteUserResponse)
+  deleteUser(@Args('id', { type: () => Int }) id: number): DeleteUserResponse {
+    return this.userService.deleteUser(id);
+  }
 }
