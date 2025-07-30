@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-@ObjectType()
-export class GenericResponse {
+@ObjectType({ isAbstract: true })
+export abstract class GenericResponse {
   @Field(() => String)
   message: string;
 }
