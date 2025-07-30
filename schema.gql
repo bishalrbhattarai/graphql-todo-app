@@ -2,6 +2,41 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserType {
+  id: Int!
+  username: String!
+}
+
+type CreateUserResponse {
+  message: String!
+  user: UserType!
+}
+
+type GetUsersResponse {
+  message: String!
+  items: [UserType!]!
+  total: Float!
+}
+
+type GetUserResponse {
+  message: String!
+}
+
 type Query {
   healthCheck: String!
+  getUsers: GetUsersResponse!
+  getUser(id: Float!): GetUserResponse!
+}
+
+type Mutation {
+  createUser(input: CreateUserDto!): CreateUserResponse!
+  deleteUser(id: Int!): GenericResponse!
+}
+
+input CreateUserDto {
+  username: String!
+}
+
+type GenericResponse {
+  message: String!
 }
