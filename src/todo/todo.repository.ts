@@ -7,8 +7,21 @@ import { UpdateTodoDto } from './dtos/update-todo.dto';
 export class TodoRepository {
   private todos: ITodo[] = [];
 
+  deleteByUserId(userId: number) {
+    const foundTodos = this.todos.filter((todo) => todo.userId === userId);
+    if (foundTodos.length === 0) return null;
+    this.todos = this.todos.filter((todo) => todo.userId !== userId);
+    return foundTodos;
+  }
+
   findById(id: number): ITodo | null {
     return this.todos.find((todo) => todo.id === id) || null;
+  }
+  deleteById(id: number): ITodo | null {
+    const foundTodo = this.findById(id);
+    if (!foundTodo) return null;
+    this.todos = this.todos.filter((todo) => todo.id !== id);
+    return foundTodo;
   }
 
   findAll(search?: string, userId?: number): ITodo[] {

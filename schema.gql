@@ -12,6 +12,20 @@ type CreateUserResponse {
   user: UserType!
 }
 
+type TodoType {
+  id: Int!
+  title: String!
+  status: TodoStatusEnum!
+  userId: Int!
+  user: UserType!
+}
+
+"""The status of a todo item"""
+enum TodoStatusEnum {
+  PENDING
+  DONE
+}
+
 type GetUsersResponse {
   message: String!
   items: [UserType!]!
@@ -26,20 +40,6 @@ type GetUserResponse {
 type DeleteUserResponse {
   message: String!
   user: UserType!
-}
-
-type TodoType {
-  id: Int!
-  title: String!
-  status: TodoStatusEnum!
-  userId: Int!
-  user: UserType!
-}
-
-"""The status of a todo item"""
-enum TodoStatusEnum {
-  PENDING
-  DONE
 }
 
 type CreateTodoResponse {
@@ -63,6 +63,11 @@ type UpdateTodoResponse {
   todo: TodoType!
 }
 
+type DeleteTodoResponse {
+  message: String!
+  todo: TodoType!
+}
+
 type Query {
   healthCheck: String!
   getUsers: GetUsersResponse!
@@ -75,6 +80,7 @@ type Mutation {
   createUser(input: CreateUserDto!): CreateUserResponse!
   deleteUser(id: Int!): DeleteUserResponse!
   createTodo(input: CreateTodoDto!): CreateTodoResponse!
+  deleteTodo(id: Int!): DeleteTodoResponse!
   updateTodo(input: UpdateTodoDto!): UpdateTodoResponse!
 }
 

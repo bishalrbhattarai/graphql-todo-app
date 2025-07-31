@@ -7,6 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+
 import { CreateTodoDto } from './dtos/create-todo.dto';
 import { TodoService } from './todo.service';
 import { CreateTodoResponse } from './dtos/create-todo.response';
@@ -16,6 +17,7 @@ import { GetTodosResponse } from './dtos/get-todos.response';
 import { GetTodoResponse } from './dtos/get-todo.response';
 import { UpdateTodoDto } from './dtos/update-todo.dto';
 import { UpdateTodoResponse } from './dtos/update-todo.respnse';
+import { DeleteTodoResponse } from './dtos/delete-todo.response';
 
 @Resolver(() => TodoType)
 export class TodoResolver {
@@ -25,6 +27,14 @@ export class TodoResolver {
   createTodo(@Args('input') input: CreateTodoDto): CreateTodoResponse {
     return this.todoService.createTodo(input);
   }
+
+  @Mutation(() => DeleteTodoResponse)
+  deleteTodo(
+    @Args('id', { type: () => Int }) id: number
+  ):DeleteTodoResponse{
+    return this.todoService.deleteTodo(id);
+  }
+
 
   @Query(() => GetTodosResponse)
   getTodos(

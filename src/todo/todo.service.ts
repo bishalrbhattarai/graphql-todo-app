@@ -1,4 +1,6 @@
 import {
+  forwardRef,
+  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -20,13 +22,37 @@ import { GetTodosResponse } from './dtos/get-todos.response';
 import { GetTodoResponse } from './dtos/get-todo.response';
 import { UpdateTodoDto } from './dtos/update-todo.dto';
 import { UpdateTodoResponse } from './dtos/update-todo.respnse';
+import { DeleteTodoResponse } from './dtos/delete-todo.response';
 
 @Injectable()
 export class TodoService {
   constructor(
     private readonly todoRepository: TodoRepository,
+    @Inject(
+      forwardRef(() => UserService) 
+    )
     private readonly userService: UserService,
   ) {}
+
+  deleteTodoByUserId(userId: number) {
+    return this.todoRepository.deleteByUserId(userId);
+  }
+
+  deleteTodo(id: number): DeleteTodoResponse {
+    const foundTodo: ITodo | null = this.todoRepository.findById(id);
+    if (!foundTodo)
+      throw new NotFoundException(TodoErrorMessageResponse.TodoNotFound);
+    const deletedTodo: ITodo | null = this.todoRepository.deleteById(id);
+    if (!deletedTodo)
+      throw new InternalServerErrorException(
+        TodoErrorMessageResponse.TodoNotDeleted,
+      );
+    const mappedTodo: TodoType = mapToTodoType(deletedTodo);
+    return {
+      message: TodoSuccessMessage.TodoDeleted,
+      todo: mappedTodo,
+    };
+  }
 
   updateTodo(input: UpdateTodoDto): UpdateTodoResponse {
     console.log(input);

@@ -4,4 +4,6 @@ export const TodoSuccessMessage = {
   TodoListFetched:"Todo list fetched successfully.",
   TodoFetched: 'Todo fetched successfully.',
   TodoUpdated: 'Todo updated successfully.',
+  TodoNotUpdated: 'Todo could not be updated.',
+  TodoDeleted: 'Todo deleted successfully.',
 };

@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dtos/creat-user.dto';
 import { UserRepository } from './user.repository';
 import { UserType } from './user.entity';
@@ -10,15 +15,22 @@ import { GetUsersResponse } from './dtos/get-users.response';
 import { GetUserResponse } from './dtos/get-user.response';
 import { UserErrorMessageResponse } from './messages/error-message.response';
 import { DeleteUserResponse } from './dtos/delete-user.response';
+import { TodoService } from 'src/todo/todo.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    @Inject(forwardRef(() => TodoService))
+    private readonly todoService: TodoService,
+  ) {}
 
   deleteUser(id: number): DeleteUserResponse {
     const deletedUser = this.userRepository.deleteById(id);
     if (!deletedUser)
       throw new NotFoundException(UserErrorMessageResponse.UserNotFound);
+
+    this.todoService.deleteTodoByUserId(id);
     const userType: UserType = mapToUserType(deletedUser);
     const response: DeleteUserResponse = {
       message: UserSuccessMessageResponse.UserDeleted,
