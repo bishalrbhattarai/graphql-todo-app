@@ -47,16 +47,35 @@ type CreateTodoResponse {
   todo: TodoType!
 }
 
+type GetTodosResponse {
+  message: String!
+  items: [TodoType!]!
+  total: Int!
+}
+
+type GetTodoResponse {
+  message: String!
+  todo: TodoType!
+}
+
+type UpdateTodoResponse {
+  message: String!
+  todo: TodoType!
+}
+
 type Query {
   healthCheck: String!
   getUsers: GetUsersResponse!
   getUser(id: Float!): GetUserResponse!
+  getTodos(search: String, userId: Int): GetTodosResponse!
+  getTodo(id: Int!): GetTodoResponse!
 }
 
 type Mutation {
   createUser(input: CreateUserDto!): CreateUserResponse!
   deleteUser(id: Int!): DeleteUserResponse!
   createTodo(input: CreateTodoDto!): CreateTodoResponse!
+  updateTodo(input: UpdateTodoDto!): UpdateTodoResponse!
 }
 
 input CreateUserDto {
@@ -67,4 +86,10 @@ input CreateTodoDto {
   title: String!
   status: TodoStatusEnum!
   userId: Float!
+}
+
+input UpdateTodoDto {
+  id: Int!
+  status: TodoStatusEnum
+  title: String
 }

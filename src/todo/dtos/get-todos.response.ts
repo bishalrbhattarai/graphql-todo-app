@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { GenericResponse } from 'src/common/dtos/generic-response.dto';
 import { TodoType } from '../todo.entity';
 
@@ -6,4 +6,6 @@ import { TodoType } from '../todo.entity';
 export class GetTodosResponse extends GenericResponse {
   @Field(() => [TodoType])
   items: TodoType[];
+  @Field(() => Int)
+  total: number;
 }
