@@ -5,7 +5,6 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/creat-user.dto';
 import { GetUsersResponse } from './dtos/get-users.response';
 import { GetUserResponse } from './dtos/get-user.response';
-import { GenericResponse } from 'src/common/dtos/generic-response.dto';
 import { DeleteUserResponse } from './dtos/delete-user.response';
 
 @Resolver(() => UserType)

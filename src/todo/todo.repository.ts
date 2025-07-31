@@ -6,6 +6,10 @@ import { CreateTodoDto } from './dtos/create-todo.dto';
 export class TodoRepository {
   private todos: ITodo[] = [];
 
+  findAll(): ITodo[] {
+    return this.todos;
+  }
+
   create(todo: CreateTodoDto): ITodo {
     const newTodo: ITodo = {
       id: this.todos.length + 1,
